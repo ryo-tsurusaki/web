@@ -1,34 +1,34 @@
-import { Component, ErrorInfo, ReactNode } from 'react'
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 type Props = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 type State = {
-  hasError: boolean
-}
+  hasError: boolean;
+};
 
 export default class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
-    super(props)
+    super(props);
     this.state = {
-      hasError: false 
-    }
+      hasError: false,
+    };
   }
 
   public static getDerivedStateFromError(error: Error) {
-    console.log('getDerivedStateFromError', error)
-    return { hasError: true }
+    console.log('getDerivedStateFromError', error);
+    return { hasError: true };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.log('componentDidCatch', error, errorInfo)
-    return { hasError: true }
+    console.log('componentDidCatch', error, errorInfo);
+    return { hasError: true };
   }
 
   public render() {
-    const { hasError } = this.state
-    const { children } = this.props
-    return hasError ? <h1>エラーが発生しました</h1> : children
+    const { hasError } = this.state;
+    const { children } = this.props;
+    return hasError ? <h1>エラーが発生しました</h1> : children;
   }
 }
