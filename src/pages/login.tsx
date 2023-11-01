@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Avatar, Box, Button, Grid, Link, Paper, TextField, Typography } from "@mui/material";
 import { teal } from "@mui/material/colors";
-import { styled } from '@mui/material/styles';
 import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { awsConfiguration } from '../config/awsConfiguration';
 
@@ -10,14 +9,6 @@ const userPool = new CognitoUserPool({
   UserPoolId: awsConfiguration.UserPoolId,
   ClientId: awsConfiguration.ClientId,
 });
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
 
 const Login: FC = () => {
   const [email, setEmail] = React.useState<string>('');
@@ -82,7 +73,7 @@ const Login: FC = () => {
           <Avatar sx={{ bgcolor: teal[400] }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography variant={"h5"} sx={{ m: "30px" }}>
+          <Typography variant="h5" sx={{ m: "30px" }}>
             LOGIN
           </Typography>
         </Grid>        
