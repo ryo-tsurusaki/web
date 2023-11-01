@@ -111,7 +111,7 @@ const App: FC = () => {
       case '/':
         return 'HOME';
       case '/login':
-        return 'LOGIN';
+        return 'ログイン';
       default:
         return 'undefined';
     }
