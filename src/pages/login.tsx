@@ -44,7 +44,7 @@ const Login: FC = () => {
 
     const checkLogin = () => {
         const cognitoUser = userPool.getCurrentUser()
-            if (cognitoUser) {
+        if (cognitoUser) {
             console.log('OK, sign in')
         } else {
             console.log('not, signing in')
