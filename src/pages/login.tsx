@@ -53,21 +53,31 @@ const Login: FC = () => {
     }
   };
 
+
+  const logout = async () => {
+    const cognitoUser = userPool.getCurrentUser();
+    try {
+      await cognitoUser?.signOut();
+      console.log('logout success.');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Paper
-        elevation={3}
+        elevation={6}
         sx={{
           p: 4,
           height: "70vh",
-          width: "280px",
-          m: "20px auto"
+          width: "480px",
+          m: "40px auto"
         }}
       >
         <Grid
           container
           direction="column"
-          
           alignItems="center"
         >
           <Avatar sx={{ bgcolor: teal[400] }}>
@@ -92,7 +102,7 @@ const Login: FC = () => {
           required
           onChange={changedPasswordHandler}
         />
-        <Box mt={3}>
+        <Box mt={5}>
           <Button type="submit" color="primary" variant="contained" fullWidth onClick={login}>
             ログイン
           </Button>
@@ -100,8 +110,14 @@ const Login: FC = () => {
             <Link href="#tbd">パスワードを忘れた方はこちら</Link>
           </Typography>
           <Typography variant="caption" display="block">
-          <Button type="submit" variant="contained" fullWidth onClick={checkLogin}>
+            <Button type="submit" variant="contained" fullWidth onClick={checkLogin}>
               checkLogin
+            </Button>
+          </Typography>
+
+          <Typography  mt={1} variant="caption" display="block">
+            <Button type="submit" variant="contained" fullWidth onClick={logout}>
+              ログアウト
             </Button>
           </Typography>
         </Box>
