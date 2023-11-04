@@ -1,8 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Avatar, Box, Button, Grid, Link, Paper, TextField, Typography } from "@mui/material";
 import { teal } from "@mui/material/colors";
 import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { setUserName } from '../store/user/action'
 import { awsConfiguration } from '../config/awsConfiguration';
 
 const userPool = new CognitoUserPool({
@@ -16,6 +19,8 @@ const Login: FC = () => {
   const changedEmailHaldler = (e: any) => setEmail(e.target.value);
   const changedPasswordHandler = (e: any) => setPassword(e.target.value);
 
+  const dispatch = useDispatch()
+
   const login = () => {
     const authenticationDetails = new AuthenticationDetails({
       Username: email,
@@ -28,9 +33,7 @@ const Login: FC = () => {
 
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
-        console.log(`result: ${result}`);
-        const accessToken = result.getAccessToken().getJwtToken();
-        console.log(`AccessToken: ${  accessToken}`);
+        console.log(result);
         setEmail('');
         setPassword('');
         console.log('OK, signIn');
@@ -45,6 +48,8 @@ const Login: FC = () => {
 
   const checkLogin = () => {
     const cognitoUser = userPool.getCurrentUser();
+    dispatch(setUserName('更新'));
+
     if (cognitoUser) {
       console.log('OK, sign in');
       console.log(cognitoUser);
