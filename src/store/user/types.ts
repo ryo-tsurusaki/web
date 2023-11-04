@@ -7,8 +7,8 @@ export type User = {
 }
 
 interface setUserNameAction extends Action {
-    name: string,
     type: typeof ActionTypes.set,
+    value: string
 }
 
 export type UserActionTypes = setUserNameAction

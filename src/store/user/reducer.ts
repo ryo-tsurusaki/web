@@ -10,7 +10,7 @@ export const UserReducer = (state = initialState, action: UserActionTypes) : Use
 
     switch (action.type) {
         case ActionTypes.set:
-            return { ...state, name: action.name }
+            return { ...state, name: action.value }
         default:
             return state
     }
