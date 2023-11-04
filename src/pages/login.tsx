@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";

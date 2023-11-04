@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { Action } from "redux";
 import { ActionTypes } from "../actionTypes";
 

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
