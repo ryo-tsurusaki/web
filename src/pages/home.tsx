@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import { RootState } from '../store';
 
 const Home: FC = () => {
-  const userState = useSelector((state: RootState) => state.user)
-  
+  const userState = useSelector((state: RootState) => state.user);
   return (
     <div>
       MENU
@@ -17,6 +16,6 @@ const Home: FC = () => {
       <h1>{userState.name}</h1>
     </div>
   );
-}
+};
 
 export default Home;

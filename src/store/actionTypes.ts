@@ -1,3 +1,3 @@
 export const ActionTypes = {
-    set: 'SET'
-} as const
+  set: 'SET',
+} as const;
