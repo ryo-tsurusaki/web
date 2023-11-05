@@ -2,7 +2,7 @@ import { ActionTypes } from "../actionTypes";
 import { User, UserActionTypes } from "./types";
 
 const initialState : User = {
-    name: 'testUser',
+    name: undefined,
 }
 
 // eslint-disable-next-line default-param-last

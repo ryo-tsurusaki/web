@@ -1,5 +1,7 @@
-import { FC, useState } from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import { FC, useState, useEffect } from 'react';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -19,6 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { RootState } from './store';
 import ErrorBoundary from './pages/errorBoundary';
 import Index from './pages/home';
 import Login from './pages/login';
@@ -97,9 +100,11 @@ const App: FC = () => {
   const pathName = useLocation().pathname;
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const userState = useSelector((state: RootState) => state.user)
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    console.log(userState)
   };
 
   const handleDrawerClose = () => {
@@ -116,6 +121,24 @@ const App: FC = () => {
         return 'undefined';
     }
   };
+
+  let isLogin = false;
+  
+
+  useEffect(
+    () => {
+
+      console.log(userState)
+
+      if (userState.name !== undefined) {
+        isLogin = true;
+      }
+
+      if (pathName !== '/login' && !isLogin) {
+        window.location.href = "/login";
+      }
+    }
+  );
 
   return (
     <Box sx={{ display: 'flex' }}>
