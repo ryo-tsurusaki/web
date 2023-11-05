@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import { RootState } from './store';
-import CommonDrawer from './component/CommonDrawer';
+import Header from './component/Header';
 import ErrorBoundary from './pages/errorBoundary';
 import Index from './pages/home';
 import Login from './pages/login';
@@ -28,9 +28,9 @@ const App: FC = () => {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ flexGrow: 1 }}>
+      <Header />
       <CssBaseline />
-      <CommonDrawer />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <ErrorBoundary>
           <Routes>
