@@ -55,12 +55,12 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: false,
+        optionalDependencies: false,
+      },
+    ],
   },
-  'import/no-extraneous-dependencies': [
-    'error',
-    {
-      devDependencies: false,
-      optionalDependencies: false,
-    },
-  ],
 };
