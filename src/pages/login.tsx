@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -35,7 +36,9 @@ const Login: FC = () => {
         console.log(result);
         setEmail('');
         setPassword('');
-        console.log('OK, signIn');
+        
+        dispatch(setUserName('ログイン中'));
+        window.location.href = "/";
       },
       onFailure: (err) => {
         alert('NG, Login please check email, password');
@@ -47,7 +50,6 @@ const Login: FC = () => {
 
   const checkLogin = () => {
     const cognitoUser = userPool.getCurrentUser();
-    dispatch(setUserName('更新'));
 
     if (cognitoUser) {
       console.log('OK, sign in');
@@ -62,6 +64,7 @@ const Login: FC = () => {
     const cognitoUser = userPool.getCurrentUser();
     try {
       await cognitoUser?.signOut();
+      dispatch(setUserName(undefined));
       console.log('logout success.');
     } catch (error) {
       console.log(error);
