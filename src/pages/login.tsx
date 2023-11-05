@@ -4,16 +4,7 @@ import { useDispatch } from 'react-redux';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import {
-  Avatar,
-  Box,
-  Button,
-  Grid,
-  Link,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Button, Grid, Paper, TextField } from '@mui/material';
 import { teal } from '@mui/material/colors';
 import {
   CognitoUserPool,
@@ -80,33 +71,13 @@ const Login: FC = () => {
     });
   };
 
-  const checkLogin = () => {
-    const cognitoUser = userPool.getCurrentUser();
-    if (cognitoUser) {
-      console.log('OK, sign in.');
-    } else {
-      console.log('not, signing in');
-    }
-  };
-
-  const logout = async () => {
-    const cognitoUser = userPool.getCurrentUser();
-    try {
-      await cognitoUser?.signOut();
-      dispatch(setUserName(undefined));
-      console.log('logout success.');
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Paper
         elevation={6}
         sx={{
           p: 4,
-          height: '70vh',
+          height: '40vh',
           width: '480px',
           m: '40px auto',
         }}
@@ -152,30 +123,6 @@ const Login: FC = () => {
           >
             ログイン
           </Button>
-          <Typography variant="caption">
-            <Link href="#tbd">パスワードを忘れた方はこちら</Link>
-          </Typography>
-          <Typography variant="caption" display="block">
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              onClick={checkLogin}
-            >
-              checkLogin
-            </Button>
-          </Typography>
-
-          <Typography mt={1} variant="caption" display="block">
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              onClick={logout}
-            >
-              ログアウト
-            </Button>
-          </Typography>
         </Box>
       </Paper>
     </Box>

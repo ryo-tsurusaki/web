@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { FC, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -20,6 +20,7 @@ import Typography from '@mui/material/Typography';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import { awsConfiguration } from '../config/awsConfiguration';
 import { setUserName } from '../store/user/action';
+import { RootState } from '../store';
 
 const userPool = new CognitoUserPool({
   UserPoolId: awsConfiguration.UserPoolId,
@@ -29,42 +30,49 @@ const userPool = new CognitoUserPool({
 const Header: FC = () => {
   const [title, setTitle] = useState<string>('');
   const [isOpen, setOpen] = useState<boolean>(false);
+  const [isLogin, setLogin] = useState<boolean>(false);
+  const userState = useSelector((state: RootState) => state.user);
   const pathName = useLocation().pathname;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      switch(pathName) {
-        case '/':
-          setTitle('ホーム');
-          break;
-        case '/login':
-          setTitle('ログイン');
-          break;
-        default:
-          setTitle('undefined');
-      }; 
+  useEffect(() => {
+    if (userState.name !== undefined) {
+      setLogin(true);
     }
-  );
+
+    switch (pathName) {
+      case '/':
+        setTitle('ホーム');
+        break;
+      case '/login':
+        setTitle('ログイン');
+        break;
+      default:
+        setTitle('undefined');
+    }
+  });
 
   const logout = async () => {
     const cognitoUser = userPool.getCurrentUser();
-
     cognitoUser?.signOut();
     dispatch(setUserName(undefined));
     window.location.href = '/login';
   };
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
-    setOpen(open);
-  };
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (!isLogin) {
+        return;
+      }
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+      setOpen(open);
+    };
 
   const list = () => (
     <Box
@@ -74,47 +82,50 @@ const Header: FC = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem key='Home' disablePadding sx={{ display: 'block' }}>
+        <ListItem key="home" disablePadding sx={{ display: 'block' }}>
           <ListItemButton component={Link} to="/">
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary='ホーム'/>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="ホーム" />
           </ListItemButton>
         </ListItem>
       </List>
       <Divider />
       <List>
-        <ListItem key='Logout' disablePadding sx={{ display: 'block' }}>
+        <ListItem key="logout" disablePadding sx={{ display: 'block' }}>
           <ListItemButton onClick={logout}>
             <ListItemIcon>
               <AccountCircle />
             </ListItemIcon>
-            <ListItemText primary='ログアウト'/>
+            <ListItemText primary="ログアウト" />
           </ListItemButton>
         </ListItem>
       </List>
     </Box>
   );
-  
+
   return (
     <AppBar position="static" sx={{ flexGrow: 1 }}>
       <Toolbar variant="dense">
-        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={toggleDrawer(true)}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+          onClick={toggleDrawer(true)}
+        >
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" color="inherit" component="div">
           {title}
         </Typography>
       </Toolbar>
-      <Drawer
-        open={isOpen}
-        onClose={toggleDrawer(false)}
-      >
+      <Drawer open={isOpen} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
     </AppBar>
   );
-}
+};
 
 export default Header;
