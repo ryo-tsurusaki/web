@@ -1,20 +1,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
 import { RootState } from '../store';
 
 const Home: FC = () => {
   const userState = useSelector((state: RootState) => state.user);
+  const [userName] = useState<string|undefined>(userState.name);
+  
   return (
-    <div>
-      MENU
-      <Button variant="outlined" size="large" component={Link} to="/login">
-        LOGIN
-      </Button>
-      <h1>{userState.name}</h1>
-    </div>
+    <Box>
+      <Typography>ようこそ {userName} さん</Typography>
+    </Box>
   );
 };
 
